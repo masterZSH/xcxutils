@@ -1,5 +1,5 @@
 
-xcx-utils
+xcxutils
 =====
 小程序工具库
 
@@ -41,6 +41,37 @@ import {base}  from './node_modules/xcxutils/src/index'
 
 
 ```
+
+示例
+
+```
+ //app.js  热更新 
+ import {wx}  from './node_modules/xcxutils/src/index'
+ onShow() {
+     // 热更新
+     wx.hotupdate();
+  }
+  
+  // 解码
+  decodeUserInfo: async function() {
+      try {
+        let code = await wx.login();
+        let userResult = await wx.getUserInfo();
+        // 调用接口解码 原来需要写很多回调方法现在只需要两行代码获取加密数据
+      }catch(e){
+        // ... 
+      }
+      
+   // md5加密
+   import {md5}  from './node_modules/xcxutils/src/index'
+   md5(123); 
+   
+   // sha1加密
+   import {sha1}  from './node_modules/xcxutils/src/index'
+   sha1(123); 
+ 
+```
+
 
 ## 功能说明 -整理了小程序开发中常用功能
 
