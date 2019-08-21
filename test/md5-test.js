@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const assert = require('assert');
 const md5 = require('../src/utils/md5');
 describe('#verify.js', () => {

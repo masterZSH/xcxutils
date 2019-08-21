@@ -1,3 +1,7 @@
+/* eslint-disable no-redeclare */
+/* eslint-disable no-unused-vars */
+/* eslint-disable camelcase */
+/* eslint-disable require-jsdoc */
 /*
  * A JavaScript implementation of the RSA Data Security, Inc. MD5 Message
  * Digest Algorithm, as defined in RFC 1321.
@@ -225,6 +229,4 @@ function calcMD5 (str) {
     return binl2hex(coreMD5(str2binl(str)));
 }
 
-module.exports = {
-    md5: hexMD5,
-};
+export const md5 = hexMD5;

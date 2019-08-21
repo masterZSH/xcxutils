@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const assert = require('assert');
 const verify = require('../src/utils/verify');
 describe('#verify.js', () => {

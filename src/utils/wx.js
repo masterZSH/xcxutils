@@ -1,16 +1,17 @@
+/* eslint-disable no-undef */
 /**
  * 微信常用方法
  * @requires module:../utils/base.js
  */
-const base = require('./base');
-const noop = base.noop;
+import { noop as _noop } from './base';
+const noop = _noop;
 
 
 /**
  * 微信登录
  * @returns {Object} -promise对象
  */
-function login () {
+function loginFunc () {
     return new Promise(function (resolve, reject) {
         wx.login({
             success: function (res) {
@@ -30,7 +31,7 @@ function login () {
  * 微信登录
  * @returns {Object} -promise对象
  */
-function getUserInfo () {
+function getUserInfoFunc () {
     return new Promise(function (resolve, reject) {
         wx.getUserInfo({
             withCredentials: true,
@@ -49,7 +50,7 @@ function getUserInfo () {
  * @returns {null}
  * {@link https://developers.weixin.qq.com/miniprogram/dev/framework/runtime/update-mechanism.html 微信小程序更新机制}.
  */
-function hotupdate () {
+function hotupdateFunc () {
     const updateManager = wx.getUpdateManager();
     updateManager.onCheckForUpdate(function (res) {
         console.log(res.hasUpdate);
@@ -84,7 +85,7 @@ content-type 默认为 application/json
    @param {number} abortTime -超时时间
    @returns {Object} - promise对象
  */
-function request (url, data, method = 'POST', dataType = 'json', responseType = 'text', header, abortTime = 5) {
+function requestFunc (url, data, method = 'POST', dataType = 'json', responseType = 'text', header, abortTime = 5) {
     wx.showLoading({
         title: '',
     });
@@ -104,10 +105,20 @@ function request (url, data, method = 'POST', dataType = 'json', responseType = 
             complete: complete,
         };
 
+        /**
+         * 成功方法
+         * @param {Object} res -参数
+         * @returns {undefined} -
+         */
         function success (res) {
             resolve(res);
         }
 
+        /**
+         * 失败方法
+         * @param {Error} err -错误
+         * @returns {undefined} -
+         */
         function fail (err) {
             wx.showToast({
                 title: '网络异常，请稍后重试',
@@ -117,6 +128,10 @@ function request (url, data, method = 'POST', dataType = 'json', responseType = 
             reject(err);
         }
 
+        /**
+         * 完成方法
+         * @returns {undefined} -
+         */
         function complete () {
             wx.hideLoading();
         }
@@ -125,7 +140,7 @@ function request (url, data, method = 'POST', dataType = 'json', responseType = 
         setTimeout(function () {
             requestTask && requestTask.abort();
             reject('请求超时');
-        }, parseInt(abortTime) * 1000);
+        }, Number.parseInt(abortTime, 10) * 1000);
     });
 }
 
@@ -133,17 +148,7 @@ function request (url, data, method = 'POST', dataType = 'json', responseType = 
  * 微信公共库.
  * @module utils/wx
  */
-module.exports = {
-
-    /** 小程序登录 */
-    login: login,
-
-    /** 小程序请求 */
-    request: request,
-
-    /** 小程序热更新 */
-    hotupdate: hotupdate,
-
-    /** 获取用户信息 */
-    getUserInfo: getUserInfo,
-};
+export const login = loginFunc;
+export const request = requestFunc;
+export const hotupdate = hotupdateFunc;
+export const getUserInfo = getUserInfoFunc;
