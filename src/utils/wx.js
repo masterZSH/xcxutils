@@ -3,7 +3,9 @@
  * 微信常用方法
  * @requires module:../utils/base.js
  */
-import { noop as _noop } from './base';
+import {
+    noop as _noop
+} from './base';
 const noop = _noop;
 
 
@@ -11,7 +13,7 @@ const noop = _noop;
  * 微信登录
  * @returns {Object} -promise对象
  */
-function loginFunc () {
+function loginFunc() {
     return new Promise(function (resolve, reject) {
         wx.login({
             success: function (res) {
@@ -31,7 +33,7 @@ function loginFunc () {
  * 微信登录
  * @returns {Object} -promise对象
  */
-function getUserInfoFunc () {
+function getUserInfoFunc() {
     return new Promise(function (resolve, reject) {
         wx.getUserInfo({
             withCredentials: true,
@@ -50,17 +52,17 @@ function getUserInfoFunc () {
  * @returns {null}
  * {@link https://developers.weixin.qq.com/miniprogram/dev/framework/runtime/update-mechanism.html 微信小程序更新机制}.
  */
-function hotupdateFunc () {
+function hotupdateFunc() {
     const updateManager = wx.getUpdateManager();
     updateManager.onCheckForUpdate(function (res) {
         console.log(res.hasUpdate);
-    // true 需要更新 false 不需要
+        // true 需要更新 false 不需要
     });
     updateManager.onUpdateReady(function () {
         wx.showModal({
             title: '更新提示',
             content: '新版本已经准备好，是否重启应用？',
-            success (res) {
+            success(res) {
                 if (res.confirm) {
                     updateManager.applyUpdate();
                 }
@@ -85,7 +87,7 @@ content-type 默认为 application/json
    @param {number} abortTime -超时时间
    @returns {Object} - promise对象
  */
-function requestFunc (url, data, method = 'POST', dataType = 'json', responseType = 'text', header, abortTime = 5) {
+function requestFunc(url, data, method = 'POST', dataType = 'json', responseType = 'text', header, abortTime = 5) {
     wx.showLoading({
         title: '',
     });
@@ -110,7 +112,7 @@ function requestFunc (url, data, method = 'POST', dataType = 'json', responseTyp
          * @param {Object} res -参数
          * @returns {undefined} -
          */
-        function success (res) {
+        function success(res) {
             resolve(res);
         }
 
@@ -119,7 +121,7 @@ function requestFunc (url, data, method = 'POST', dataType = 'json', responseTyp
          * @param {Error} err -错误
          * @returns {undefined} -
          */
-        function fail (err) {
+        function fail(err) {
             wx.showToast({
                 title: '网络异常，请稍后重试',
                 icon: 'none',
@@ -132,7 +134,7 @@ function requestFunc (url, data, method = 'POST', dataType = 'json', responseTyp
          * 完成方法
          * @returns {undefined} -
          */
-        function complete () {
+        function complete() {
             wx.hideLoading();
         }
         let requestTask = wx.request(requestObject);
@@ -144,6 +146,22 @@ function requestFunc (url, data, method = 'POST', dataType = 'json', responseTyp
     });
 }
 
+
+/**
+ * input 输入绑定
+ * 绑定页面输入值到data
+ * @example   inputHandler.apply(this, [e,'cloudPrice']);
+ * @param {Object} e - input event
+ * @param {String} name -data.name
+ * @returns {undefined}
+ */
+function inputHandlerFunc(e, name) {
+    let value = e.detail.value;
+    let setObj = {};
+    setObj[name] = value;
+    this.setData(setObj);
+}
+
 /**
  * 微信公共库.
  * @module utils/wx
@@ -152,3 +170,4 @@ export const login = loginFunc;
 export const request = requestFunc;
 export const hotupdate = hotupdateFunc;
 export const getUserInfo = getUserInfoFunc;
+export const inputHandler = inputHandlerFunc;
