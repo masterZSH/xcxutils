@@ -29,7 +29,7 @@ import {verify}  from './node_modules/xcxutils/src/index'
 // 加载sha1加密
 import {sha1}  from './node_modules/xcxutils/src/index'
 
-// 加载sha1加密
+// 加载md5加密
 import {md5}  from './node_modules/xcxutils/src/index'
 
 
