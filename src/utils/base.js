@@ -32,6 +32,8 @@ function deepclone(obj) {
 }
 
 /**
+ * 深度合并对象属性
+ *
  * @param {Object} target -目标对象
  * @param {...Object} source -原对象 
  */
